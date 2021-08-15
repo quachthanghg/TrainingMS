@@ -13,25 +13,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{54
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{DB5E4D10-84A9-4A2C-9A71-B564C6ED16DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.API", "Exam.API\Exam.API.csproj", "{9FFFBF15-47EC-4E9F-B765-C14F20DDBCF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exam.API", "Exam.API\Exam.API.csproj", "{9FFFBF15-47EC-4E9F-B765-C14F20DDBCF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.Domain", "Exam.Domain\Exam.Domain.csproj", "{5EEE351E-5872-473A-BBD9-ADD3A01CD951}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exam.Domain", "Exam.Domain\Exam.Domain.csproj", "{5EEE351E-5872-473A-BBD9-ADD3A01CD951}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.Infrastructure", "Exam.Infrastructure\Exam.Infrastructure.csproj", "{C1B95F2D-4438-407A-98BB-E7EB89141083}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exam.Infrastructure", "Exam.Infrastructure\Exam.Infrastructure.csproj", "{C1B95F2D-4438-407A-98BB-E7EB89141083}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.API", "Identity.API\Identity.API.csproj", "{A4B47D2C-61E6-41B5-BCF6-3DCDE2761632}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.API", "Identity.API\Identity.API.csproj", "{A4B47D2C-61E6-41B5-BCF6-3DCDE2761632}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exam", "Exam", "{405BFB89-B988-430C-9C04-3198E4A36B27}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{BBF2487A-7C00-4783-8B98-24E6E9C93AA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.Domain.UnitTests", "Exam.Domain.UnitTests\Exam.Domain.UnitTests.csproj", "{671A37C7-A666-4790-9F3E-C37B3D272CE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exam.Domain.UnitTests", "Exam.Domain.UnitTests\Exam.Domain.UnitTests.csproj", "{671A37C7-A666-4790-9F3E-C37B3D272CE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.API.IntefrationTests", "Exam.API.IntefrationTests\Exam.API.IntefrationTests.csproj", "{B2A9BDDB-D170-4826-89DA-71226F355004}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exam.API.IntefrationTests", "Exam.API.IntefrationTests\Exam.API.IntefrationTests.csproj", "{B2A9BDDB-D170-4826-89DA-71226F355004}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.Infrastructure.IntegrationTests", "Exam.Infrastructure.IntegrationTests\Exam.Infrastructure.IntegrationTests.csproj", "{FEA3811C-6914-4916-AB61-57398036A63F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exam.Infrastructure.IntegrationTests", "Exam.Infrastructure.IntegrationTests\Exam.Infrastructure.IntegrationTests.csproj", "{FEA3811C-6914-4916-AB61-57398036A63F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.API.IntegrationTests", "Identity.API.IntegrationTests\Identity.API.IntegrationTests.csproj", "{B476FA8D-6FD5-4BB4-BB0E-2B1A973E43C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.API.IntegrationTests", "Identity.API.IntegrationTests\Identity.API.IntegrationTests.csproj", "{B476FA8D-6FD5-4BB4-BB0E-2B1A973E43C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{FA6C1E65-4789-4048-9DD3-DED8315F32BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.Common", "Exam.Common\Exam.Common.csproj", "{39BADBFA-F51A-4F3A-9EFB-1DC5087D5C62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +75,10 @@ Global
 		{B476FA8D-6FD5-4BB4-BB0E-2B1A973E43C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B476FA8D-6FD5-4BB4-BB0E-2B1A973E43C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B476FA8D-6FD5-4BB4-BB0E-2B1A973E43C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39BADBFA-F51A-4F3A-9EFB-1DC5087D5C62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39BADBFA-F51A-4F3A-9EFB-1DC5087D5C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39BADBFA-F51A-4F3A-9EFB-1DC5087D5C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39BADBFA-F51A-4F3A-9EFB-1DC5087D5C62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +97,8 @@ Global
 		{B2A9BDDB-D170-4826-89DA-71226F355004} = {405BFB89-B988-430C-9C04-3198E4A36B27}
 		{FEA3811C-6914-4916-AB61-57398036A63F} = {405BFB89-B988-430C-9C04-3198E4A36B27}
 		{B476FA8D-6FD5-4BB4-BB0E-2B1A973E43C1} = {BBF2487A-7C00-4783-8B98-24E6E9C93AA6}
+		{FA6C1E65-4789-4048-9DD3-DED8315F32BF} = {DB5E4D10-84A9-4A2C-9A71-B564C6ED16DE}
+		{39BADBFA-F51A-4F3A-9EFB-1DC5087D5C62} = {FA6C1E65-4789-4048-9DD3-DED8315F32BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05376858-CE23-47FF-A568-360292B2AF41}

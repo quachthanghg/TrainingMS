@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="SeedWork\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Dtos\" />
   </ItemGroup>
 
 </Project>
