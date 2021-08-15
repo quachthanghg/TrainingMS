@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Exam.Domain.AggregatesModel.ExamAggregate
 {
-    public class Exam : Entity, IAggregateRoot
+    public class Exams : Entity, IAggregateRoot
     {
-        public Exam(string name, string shortDesc, string content, int numberOfQuestions, TimeSpan duration,
+        public Exams(string name, string shortDesc, string content, int numberOfQuestions, TimeSpan duration,
             IEnumerable<Question> questions, Level level, string ownerUserId, int numberOfQuestionCorrectForPass,
             bool isTimeRestricted)
         {
@@ -34,7 +34,7 @@ namespace Exam.Domain.AggregatesModel.ExamAggregate
                     numberOfQuestionCorrectForPass, isTimeRestricted);
         }
 
-        public Exam(string name, string shortDesc, string content, int numberOfQuestions, Level level, DateTime dateCreated, string ownerUserId, int numberOfQuestionCorrectForPass, bool isTimeRestricted)
+        public Exams(string name, string shortDesc, string content, int numberOfQuestions, Level level, DateTime dateCreated, string ownerUserId, int numberOfQuestionCorrectForPass, bool isTimeRestricted)
         {
             this.Name = name;
             this.ShortDesc = shortDesc;

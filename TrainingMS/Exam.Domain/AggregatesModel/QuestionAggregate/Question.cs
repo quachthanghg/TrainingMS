@@ -11,7 +11,7 @@ namespace Exam.Domain.AggregatesModel.QuestionAggregate
 {
     public class Question : Entity, IAggregateRoot
     {
-        public Question(int id, string content, QuestionType questionType, Level level, string categoryId,
+        public Question(string id, string content, QuestionType questionType, Level level, string categoryId,
             IEnumerable<Answer> answers, string explain, string ownerUserId = null)
         {
             if (answers == null && !answers.Any())

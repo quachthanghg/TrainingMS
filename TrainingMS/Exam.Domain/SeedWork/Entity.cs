@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,26 +11,19 @@ namespace Exam.Domain.SeedWork
 {
     public abstract class Entity
     {
-        int? _requestedHashCode;
-        int _Id;
-        public virtual int Id
-        {
-            get
-            {
-                return _Id;
-            }
-            protected set
-            {
-                _Id = value;
-            }
-        }
+        private int? _requestedHashCode;
+
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        [BsonElement("_id")]
+        public virtual string Id { get; protected set; }
 
         private List<INotification> _domainEvents;
         public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();
 
         public void AddDomainEvent(INotification eventItem)
         {
-            _domainEvents = _domainEvents ?? new List<INotification>();
+            _domainEvents ??= new List<INotification>();
             _domainEvents.Add(eventItem);
         }
 
@@ -44,7 +39,7 @@ namespace Exam.Domain.SeedWork
 
         public bool IsTransient()
         {
-            return this.Id == default(Int32);
+            return this.Id == default;
         }
 
         public override bool Equals(object obj)
