@@ -1,33 +1,28 @@
+using AutoMapper;
+using Exam.API.AutoMapper;
+using Exam.API.Filters;
 using Exam.Domain.AggregatesModel.ExamAggregate;
 using Exam.Domain.AggregatesModel.ExamResultAggregate;
 using Exam.Domain.AggregatesModel.UserAggregate;
 using Exam.Infrastructure.Repositories;
+using Exam.Infrastructure.SeedWork;
+using HealthChecks.UI.Client;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Exam.Infrastructure.SeedWork;
-using MediatR;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using MongoDB.Driver;
-using AutoMapper;
-using Exam.API.AutoMapper;
-using Exam.API.Application.Commands;
-using Exam.API.Application.Queries.GetExamList;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using HealthChecks.UI.Client;
-using System.Text.Json;
-using Microsoft.AspNetCore.Http;
 using System.Net.Mime;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
+using System.Text.Json;
 
 namespace Exam.API
 {
@@ -43,12 +38,49 @@ namespace Exam.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Exam.API", Version = "v1" });
+                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows()
+                    {
+                        Implicit = new OpenApiOAuthFlow()
+                        {
+                            AuthorizationUrl = new Uri($"{Configuration.GetValue<string>("IdentityUrl")}/connect/authorize"),
+                            TokenUrl = new Uri($"{Configuration.GetValue<string>("IdentityUrl")}/connect/token"),
+                            Scopes = new Dictionary<string, string>()
+                            {
+                                {"full_access", "Full Access"},
+                            }
+                        }
+                    }
+                });
+                c.OperationFilter<AuthorizeCheckOperationFilter>();
             });
+
+            var identityUrl = Configuration.GetValue<string>("IdentityUrl");
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults
+                    .AuthenticationScheme;
+                options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults
+                    .AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = identityUrl;
+                options.RequireHttpsMetadata = false;
+                options.Audience = "exam_api";
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             services.Configure<ExamSettings>(Configuration);
 
             // Auto Mapper Configurations
