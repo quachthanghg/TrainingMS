@@ -1,3 +1,4 @@
+using HealthChecks.UI.Client;
 using Identity.API.Data;
 using Identity.API.Models;
 using Identity.API.Services;
@@ -5,20 +6,25 @@ using IdentityServer4.AspNetIdentity;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Identity.API
@@ -119,7 +125,24 @@ namespace Identity.API
                             maxRetryDelay: TimeSpan.FromSeconds(30),
                             errorNumbersToAdd: null);
                     });
-            }).Services.AddTransient<IProfileService, ProfileService>(); ;
+            }).Services.AddTransient<IProfileService, ProfileService>();
+
+            //Health check
+            services.AddHealthChecks()
+                    .AddCheck("self", () => HealthCheckResult.Healthy())
+                    .AddSqlServer(
+                        connectionString,
+                        name: "IdentityDB-check",
+                        tags: new string[] { "identitydb" });
+
+            services.AddHealthChecksUI(opt =>
+            {
+                opt.SetEvaluationTimeInSeconds(15); //time in seconds between check
+                opt.MaximumHistoryEntriesPerEndpoint(60); //maximum history of checks
+                opt.SetApiMaxActiveRequests(1); //api requests concurrency
+
+                opt.AddHealthCheckEndpoint("Identity API", "/hc"); //map health check api
+            }).AddInMemoryStorage();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -146,6 +169,34 @@ namespace Identity.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                //Health check
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions()
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapHealthChecksUI(options => options.UIPath = "/hc-ui");
+                endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                {
+                    Predicate = r => r.Name.Contains("self")
+                });
+                endpoints.MapHealthChecks("/hc-details",
+                            new HealthCheckOptions
+                            {
+                                ResponseWriter = async (context, report) =>
+                                {
+                                    var result = JsonSerializer.Serialize(
+                                        new
+                                        {
+                                            status = report.Status.ToString(),
+                                            monitors = report.Entries.Select(e => new { key = e.Key, value = Enum.GetName(typeof(HealthStatus), e.Value.Status) })
+                                        });
+                                    context.Response.ContentType = MediaTypeNames.Application.Json;
+                                    await context.Response.WriteAsync(result);
+                                }
+                            }
+                        );
             });
         }
     }
