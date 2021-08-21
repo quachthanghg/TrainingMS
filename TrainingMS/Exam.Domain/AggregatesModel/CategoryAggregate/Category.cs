@@ -10,5 +10,6 @@ namespace Exam.Domain.AggregatesModel.CategoryAggregate
 
         [BsonElement("urlPath")]
         public string UrlPath { set; get; } //domain/exam-category-1/
+        public Category(string id, string name, string urlPath) => (Id, Name, UrlPath) = (id, name, urlPath);
     }
 }
