@@ -1,4 +1,4 @@
-﻿using Exam.API.Application.Queries.GetExamList;
+﻿using Exam.API.Application.Queries.Exams.GetExamList;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +14,7 @@ namespace Exam.API.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
-    [Authorize]
+   
     public class ExamController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -25,7 +25,21 @@ namespace Exam.API.Controllers
             _logger = logger;
         }
 
+        [HttpGet("items")]
+        [Authorize(Policy = "PublicSecureClairm")]
+        public async Task<ActionResult> GetExams1()
+        {
+            _logger.LogInformation("BEGIN: GetExams");
+
+            var query = new GetExamListQuery();
+            var result = await _mediator.Send(query);
+
+            _logger.LogInformation("END: GetExams");
+            return Ok(result);
+        }
+
         [HttpGet]
+        [Authorize(Policy = "PublicSecure")]
         public async Task<ActionResult> GetExams()
         {
             _logger.LogInformation("BEGIN: GetExams");

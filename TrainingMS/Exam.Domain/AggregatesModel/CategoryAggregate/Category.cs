@@ -3,7 +3,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Exam.Domain.AggregatesModel.CategoryAggregate
 {
-    public class Category : Entity
+    [BsonIgnoreExtraElements]
+    public class Category : Entity, IAggregateRoot
     {
         [BsonElement("name")]
         public string Name { get; set; }

@@ -1,6 +1,7 @@
 using AutoMapper;
 using Exam.API.AutoMapper;
 using Exam.API.Filters;
+using Exam.Domain.AggregatesModel.CategoryAggregate;
 using Exam.Domain.AggregatesModel.ExamAggregate;
 using Exam.Domain.AggregatesModel.ExamResultAggregate;
 using Exam.Domain.AggregatesModel.UserAggregate;
@@ -8,6 +9,7 @@ using Exam.Infrastructure.Repositories;
 using Exam.Infrastructure.SeedWork;
 using HealthChecks.UI.Client;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -64,9 +66,9 @@ namespace Exam.API
             var identityUrl = Configuration.GetValue<string>("IdentityUrl");
             services.AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults
+                options.DefaultAuthenticateScheme = JwtBearerDefaults
                     .AuthenticationScheme;
-                options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults
+                options.DefaultChallengeScheme = JwtBearerDefaults
                     .AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
@@ -79,6 +81,12 @@ namespace Exam.API
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("PublicSecureClairm", policy => policy.RequireClaim("client_id", "exam_api_swaggerui"));
+                options.AddPolicy("PublicSecure", policy => policy.RequireRole("role", "Administrator"));
             });
 
             services.Configure<ExamSettings>(Configuration);
@@ -156,6 +164,7 @@ namespace Exam.API
             services.AddTransient<IExamRepository, ExamRepository>();
             services.AddTransient<IExamResultRepository, ExamResultRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -173,6 +182,8 @@ namespace Exam.API
             app.UseRouting();
 
             app.UseCors("CorsPolicy");
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

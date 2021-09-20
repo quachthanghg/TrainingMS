@@ -67,6 +67,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.UI", "Identity.UI\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.STS.Identity", "Identity.STS.Identity\Identity.STS.Identity.csproj", "{E1793C12-B9FD-4F73-813A-66F7D7D9B1B6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminApp", "AdminApp\AdminApp.csproj", "{50631DC4-6C47-4823-98B3-62A5299DCD58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -161,6 +163,10 @@ Global
 		{E1793C12-B9FD-4F73-813A-66F7D7D9B1B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1793C12-B9FD-4F73-813A-66F7D7D9B1B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1793C12-B9FD-4F73-813A-66F7D7D9B1B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50631DC4-6C47-4823-98B3-62A5299DCD58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50631DC4-6C47-4823-98B3-62A5299DCD58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50631DC4-6C47-4823-98B3-62A5299DCD58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50631DC4-6C47-4823-98B3-62A5299DCD58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -196,6 +202,7 @@ Global
 		{5AC88496-7DB2-44EF-9F86-45BFCD56BF2B} = {54F867C9-639C-4856-8373-41D376CC3CAB}
 		{29D5F397-C474-4440-B035-9905EAF3E759} = {54F867C9-639C-4856-8373-41D376CC3CAB}
 		{E1793C12-B9FD-4F73-813A-66F7D7D9B1B6} = {54F867C9-639C-4856-8373-41D376CC3CAB}
+		{50631DC4-6C47-4823-98B3-62A5299DCD58} = {9DDE9F40-BC61-4A00-8F47-8E3A2EDE04A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05376858-CE23-47FF-A568-360292B2AF41}
