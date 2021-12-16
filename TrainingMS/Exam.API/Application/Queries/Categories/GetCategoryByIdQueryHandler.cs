@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Exam.Common.Dtos.Exam.Categories;
+using Exam.Common.SeedWork;
 using Exam.Domain.AggregatesModel.CategoryAggregate;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -10,9 +11,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Exam.API.Application.Queries.Categories.GetCategoryById
+namespace Exam.API.Application.Queries.Categories
 {
-    public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, CategoryDto>
+    public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, ApiResult<CategoryDto>>
     {
 
         private readonly ICategoryRepository _categoryRepository;
@@ -34,7 +35,7 @@ namespace Exam.API.Application.Queries.Categories.GetCategoryById
 
         }
 
-        public async Task<CategoryDto> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ApiResult<CategoryDto>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("BEGIN: GetCategoryByIdQueryHandler");
 
@@ -42,8 +43,7 @@ namespace Exam.API.Application.Queries.Categories.GetCategoryById
             var item = _mapper.Map<CategoryDto>(result);
 
             _logger.LogInformation("END: GetCategoryByIdQueryHandler");
-
-            return item;
+            return new ApiSuccessResult<CategoryDto>(item);
         }
     }
 }

@@ -6,8 +6,8 @@ namespace AdminApp.Services.Interfaces
 {
     public interface ICategoryService
     {
-        Task<PagedList<CategoryDto>> GetCategoriesPagingAsync(CategoryFilter categoryFilter);
-        Task<CategoryDto> GetCategoryByIdAsync(string id);
+        Task<ApiResult<PagedList<CategoryDto>>> GetCategoriesPagingAsync(CategoryFilter categoryFilter);
+        Task<ApiResult<CategoryDto>> GetCategoryByIdAsync(string id);
         Task<bool> CreateAsync(CreateCategoryRequest request);
         Task<bool> UpdateAsync(UpdateCategoryRequest request);
         Task<bool> DeleteAsync(string id);

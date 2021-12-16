@@ -1,6 +1,6 @@
-﻿@page "/app/categories"
+﻿@page "/app/questions"
 @using Exam.Common.Dtos.Exam.Categories
-@inject ICategoryService CategoryService
+@inject IQuestionService QuestionService
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
 
@@ -19,13 +19,15 @@
                     <MudItem xs="12" md="12">
                         <MudTable Items="@Elements" FixedHeader="true" FixedFooter="false" Height="400px">
                             <HeaderContent>
-                                <MudTh>Name</MudTh>
-                                <MudTh>URL</MudTh>
+                                <MudTh>QuestionType</MudTh>
+                                <MudTh>Level</MudTh>
+                                <MudTh>Content</MudTh>
                                 <MudTh>Action</MudTh>
                             </HeaderContent>
                             <RowTemplate>
-                                <MudTd DataLabel="Name">@context.Name</MudTd>
-                                <MudTd DataLabel="URL">@context.UrlPath</MudTd>
+                                <MudTd DataLabel="URL">@context.QuestionType</MudTd>
+                                <MudTd DataLabel="URL">@context.Level</MudTd>
+                                <MudTd DataLabel="Content">@context.Content</MudTd>
                                 <MudTd>
                                     <MudIconButton Icon="@Icons.Material.Filled.Edit" OnClick="()=>NavigateToEdit(context.Id)" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large" Class="ma-2" />
                                     <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="async ()=>await OnDeleteTask(context.Id)" Variant="Variant.Filled" Color="Color.Error" Size="Size.Large" Class="ma-2" />
@@ -61,10 +63,10 @@
     public bool loading = false;
 
     private string DeleteId { set; get; }
-    private List<CategoryDto> Elements = new List<CategoryDto>();
+    private List<QuestionDto> Elements = new List<QuestionDto>();
     public MetaData MetaData { get; set; } = new MetaData();
 
-    private CategoryFilter _filter = new CategoryFilter();
+    private QuestionFilter _filter = new QuestionFilter();
 
 
 
@@ -73,7 +75,7 @@
         await GetTasks();
     }
 
-    public async Task SearchData(CategoryFilter filter)
+    public async Task SearchData(QuestionFilter filter)
     {
         _filter = filter;
         await GetTasks();
@@ -93,7 +95,7 @@
         var result = await dialog.Result;
         if (!result.Cancelled)
         {
-            await CategoryService.DeleteAsync(DeleteId);
+            await QuestionService.DeleteAsync(DeleteId);
             await GetTasks();
         }
     }
@@ -103,7 +105,7 @@
         loading = true;
         try
         {
-            var result = await CategoryService.GetCategoriesPagingAsync(_filter);
+            var result = await QuestionService.GetCategoriesPagingAsync(_filter);
             Elements = result.ResultObj.Items;
             MetaData = result.ResultObj.MetaData;
             loading = false;
@@ -124,6 +126,6 @@
 
     private void NavigateToEdit(string id)
     {
-        NavigationManager.NavigateTo($"/app/categories/details/{id}");
+        //NavigationManager.NavigateTo($"/app/categories/details/{id}");
     }
 }

@@ -1,8 +1,5 @@
-﻿using Exam.API.Application.Commands.Categories.CreateCategory;
-using Exam.API.Application.Commands.Categories.DeleteCategory;
-using Exam.API.Application.Commands.Categories.UpdateCategory;
-using Exam.API.Application.Queries.Categories.GetCategoriesPaging;
-using Exam.API.Application.Queries.Categories.GetCategoryById;
+﻿using Exam.API.Application.Commands.Categories;
+using Exam.API.Application.Queries.Categories;
 using Exam.Common.Dtos.Exam.Categories;
 using Exam.Common.SeedWork;
 using MediatR;
@@ -32,7 +29,7 @@ namespace Exam.API.Controllers
         }
 
         [HttpGet("items")]
-        [ProducesResponseType(typeof(PagedList<CategoryDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiSuccessResult<PagedList<CategoryDto>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCategoriesPagingAsync([FromQuery] GetCategoriesPagingQuery query)
         {
             _logger.LogInformation("BEGIN: GetCategoriesPagingAsync");
@@ -45,7 +42,7 @@ namespace Exam.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(CategoryDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResult<CategoryDto>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetCategoriesByIdAsync(string id)
         {

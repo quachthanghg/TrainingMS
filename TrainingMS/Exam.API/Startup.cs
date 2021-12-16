@@ -1,9 +1,11 @@
 using AutoMapper;
 using Exam.API.AutoMapper;
+using Exam.API.Extensions;
 using Exam.API.Filters;
 using Exam.Domain.AggregatesModel.CategoryAggregate;
 using Exam.Domain.AggregatesModel.ExamAggregate;
 using Exam.Domain.AggregatesModel.ExamResultAggregate;
+using Exam.Domain.AggregatesModel.QuestionAggregate;
 using Exam.Domain.AggregatesModel.UserAggregate;
 using Exam.Infrastructure.Repositories;
 using Exam.Infrastructure.SeedWork;
@@ -107,6 +109,8 @@ namespace Exam.API
             var databaseName = Configuration.GetValue<string>("DatabaseSettings:DatabaseName");
             var mongodbConnectionString = "mongodb://" + user + ":" + password + "@" + server + "/" + databaseName + "?authSource=admin";
 
+            services.AddHttpContextAccessor();
+
             services.AddSingleton<IMongoClient>(c =>
             {
                 return new MongoClient(mongodbConnectionString);
@@ -165,6 +169,7 @@ namespace Exam.API
             services.AddTransient<IExamResultRepository, ExamResultRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IQuestionRepository, QuestionRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -176,6 +181,8 @@ namespace Exam.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Exam.API v1"));
             }
+
+            app.UseErrorWrapping();
 
             app.UseHttpsRedirection();
 

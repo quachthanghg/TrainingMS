@@ -1,4 +1,4 @@
-﻿@page "/app/categories/details/{Id}"
+﻿@page "/app/questions/details/{Id}"
 @using Exam.Common.Dtos.Exam.Categories
 @using Microsoft.Extensions.Logging
 @inject ICategoryService CategoryService
@@ -74,6 +74,7 @@
             model.Name = result.ResultObj.Name;
             model.UrlPath = result.ResultObj.UrlPath;
         }
+
         loading = false;
     }
 

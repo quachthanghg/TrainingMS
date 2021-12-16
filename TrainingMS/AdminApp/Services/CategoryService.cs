@@ -32,13 +32,13 @@ namespace AdminApp.Services
             return result.IsSuccessStatusCode;
         }
 
-        public async Task<CategoryDto> GetCategoryByIdAsync(string id)
+        public async Task<ApiResult<CategoryDto>> GetCategoryByIdAsync(string id)
         {
-            var result = await _httpClient.GetFromJsonAsync<CategoryDto>($"/api/v1/category/{id}");
+            var result = await _httpClient.GetFromJsonAsync<ApiResult<CategoryDto>>($"/api/v1/category/{id}");
             return result;
         }
 
-        public async Task<PagedList<CategoryDto>> GetCategoriesPagingAsync(CategoryFilter categoryFilter)
+        public async Task<ApiResult<PagedList<CategoryDto>>> GetCategoriesPagingAsync(CategoryFilter categoryFilter)
         {
             var queryStringParam = new Dictionary<string, string>
             {
@@ -53,7 +53,7 @@ namespace AdminApp.Services
 
             string url = QueryHelpers.AddQueryString("/api/v1/category/items", queryStringParam);
 
-            var result = await _httpClient.GetFromJsonAsync<PagedList<CategoryDto>>(url);
+            var result = await _httpClient.GetFromJsonAsync<ApiResult<PagedList<CategoryDto>>>(url);
             return result;
         }
 
