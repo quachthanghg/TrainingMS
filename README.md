@@ -550,4 +550,87 @@ var common = {
         return defaultButton;
     },
 }# TrainingMS
+
+$(".currency").on({
+    input: function () {
+        // Handle change...
+        $(this).val(common.currencyFormat(this.value));
+    }
+});
+
+$('.numberOnly').on({
+    //blur: function () {
+    //    // Handle blur...
+    //    common.numberFormat(this.value);
+    //},
+    //change: function () {
+    //    // Handle change...
+    //    common.numberFormat(this.value);
+    //},
+    input: function () {
+        // Handle change...
+        $(this).val(common.numberFormat(this.value));
+    },
+});
+
+$('.code').on({
+    input: function () {
+        // Handle change...
+        $(this).val(common.codeFormat(this.value));
+    },
+});
+
+$('.name-format').on({
+    input: function () {
+        // Handle change...
+        $(this).val(common.nameFormat(this.value));
+    },
+});
+
+$('.ipV4').on({
+    input: function () {
+        debugger
+        if (!common.ipV4Format(this.value)) {
+            if (!$(this).parent().hasClass("has-error")) {
+                $(this).parent().addClass("has-error")
+            }
+
+            $(".ipV4Error").text("IPV4 không đúng định dạng")
+        } else {
+            $(this).parent().removeClass("has-error")
+            $(".ipV4Error").text("")
+        }
+    },
+});
+
+$('.vnPhoneNumber').on({
+    input: function () {
+        if (!common.vnPhoneNumber(this.value)) {
+            if (!$(this).parent().hasClass("has-error")) {
+                $(this).parent().addClass("has-error")
+            }
+
+            $(".vnPhoneNumberError").text("Số điện thoại không đúng định dạng")
+        } else {
+            $(this).parent().removeClass("has-error")
+            $(".vnPhoneNumberError").text("")
+        }
+    },
+});
+
+$('.email').on({
+    input: function () {
+        if (!common.emailFormat(this.value)) {
+            if (!$(this).parent().hasClass("has-error")) {
+                $(this).parent().addClass("has-error")
+            }
+
+            $(".emailError").text("Email không đúng định dạng")
+        } else {
+            $(this).parent().removeClass("has-error")
+            $(".emailError").text("")
+        }
+    },
+});
+
 TrainingMS
